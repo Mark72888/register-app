@@ -55,7 +55,6 @@ environment {
 		  }
 	  }
 
-tages {
         stage("Build & Push Docker Image") {
             steps {
                 script {
