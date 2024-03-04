@@ -6,7 +6,7 @@ pipeline {
 	      }
 environment {
         REGISTRY_URL = 'https://hub.docker.com/repositories/mark72888'
-        DOCKER_REGISTRY_CREDENTIALS = credentials('mark72888')
+        DOCKER_REGISTRY_CREDENTIALS = credentials('dockerhub')
         IMAGE_NAME = 'register-app-pipeline'
         IMAGE_TAG = 'register-app'
 	}
