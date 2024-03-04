@@ -4,12 +4,7 @@ pipeline {
 		jdk 'Java17'
 		maven 'Maven3'
 	      }
-	environment {
-        REGISTRY_URL = 'https://hub.docker.com/repositories/mark72888'
-        DOCKER_PASS = credentials('Mark.lalli@123')
-        IMAGE_NAME = 'register-app-pipeline'
-        IMAGE_TAG = 'register-app-pipeline-o1'
-    }
+
 	stages {
 		stage("Cleanup Workspace"){
 			steps {
