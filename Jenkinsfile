@@ -5,10 +5,12 @@ pipeline {
 		maven 'Maven3'
 	      }
 environment {
-        REGISTRY_URL = 'https://hub.docker.com/repositories/mark72888'
-        DOCKER_REGISTRY_CREDENTIALS = credentials('dockerhub')
-        IMAGE_NAME = 'register-app-pipeline'
-        IMAGE_TAG = 'register-app'
+	    APP_NAME = "register-app-pipeline"
+            RELEASE = "1.0.0"
+            DOCKER_USER = "mark72888"
+            DOCKER_PASS = 'dockerhub'
+            IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
+            IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
 	}
 	
 	stages {
@@ -55,21 +57,19 @@ environment {
 		  }
 	  }
 
-        stage("Build & Push Docker Image") {
+	stage("Build & Push Docker Image") {
             steps {
                 script {
-                    // Build Docker image
-                    docker.build("${env.IMAGE_NAME}:${env.IMAGE_TAG}")
+                    docker.withRegistry('',DOCKER_PASS) {
+                        docker_image = docker.build "${IMAGE_NAME}"
+                    }
 
-                    // Authenticate with Docker registry
-                    withDockerRegistry(credentialsId: env.DOCKER_REGISTRY_CREDENTIALS, url: env.REGISTRY_URL) {
-                        // Push Docker image
-                        docker.withRegistry(env.REGISTRY_URL, env.DOCKER_REGISTRY_CREDENTIALS) {
-                            docker.image("${env.IMAGE_NAME}:${env.IMAGE_TAG}").push()
-                        }
+                    docker.withRegistry('',DOCKER_PASS) {
+                        docker_image.push("${IMAGE_TAG}")
+                        docker_image.push('latest')
                     }
                 }
             }
-        }
+       }
     }
 }
