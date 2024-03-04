@@ -44,7 +44,7 @@ pipeline {
 		stage("Quality Gate"){
 			steps {
 			script {
-				withforQualityGate abortPipeline: false, credentialsid: 'Jenkins-SonarQube-token'
+				withForQualityGate abortPipeline: false, credentialsid: 'Jenkins-SonarQube-token'
 				sh "mvn sonar:sonar"
 		   	 }	
 		  }
