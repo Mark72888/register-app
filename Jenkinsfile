@@ -4,7 +4,13 @@ pipeline {
 		jdk 'Java17'
 		maven 'Maven3'
 	      }
-
+environment {
+        REGISTRY_URL = 'https://hub.docker.com/repositories/mark72888'
+        DOCKER_REGISTRY_CREDENTIALS = credentials('mark72888')
+        IMAGE_NAME = 'register-app-pipeline'
+        IMAGE_TAG = 'register-app'
+	}
+	
 	stages {
 		stage("Cleanup Workspace"){
 			steps {
@@ -47,6 +53,24 @@ pipeline {
 				waitForQualityGate abortPipeline: false, credentialsid: 'Jenkins-SonarQube-token'
 		   	 }	
 		  }
-	     }
-     }
+	  }
+
+tages {
+        stage("Build & Push Docker Image") {
+            steps {
+                script {
+                    // Build Docker image
+                    docker.build("${env.IMAGE_NAME}:${env.IMAGE_TAG}")
+
+                    // Authenticate with Docker registry
+                    withDockerRegistry(credentialsId: env.DOCKER_REGISTRY_CREDENTIALS, url: env.REGISTRY_URL) {
+                        // Push Docker image
+                        docker.withRegistry(env.REGISTRY_URL, env.DOCKER_REGISTRY_CREDENTIALS) {
+                            docker.image("${env.IMAGE_NAME}:${env.IMAGE_TAG}").push()
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
