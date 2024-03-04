@@ -45,7 +45,6 @@ pipeline {
 			steps {
 			script {
 				waitForQualityGate abortPipeline: false, credentialsid: 'Jenkins-SonarQube-token'
-				sh "mvn sonar:sonar"
 		   	 }	
 		  }
 	     }
