@@ -4,7 +4,7 @@ pipeline {
 		jdk 'Java17'
 		maven 'Maven3'
 	      }
-environment {
+/* environment {
 	    APP_NAME = "register-app-pipeline"
             RELEASE = "1.0.0"
             DOCKER_USER = "mark72888"
@@ -12,7 +12,7 @@ environment {
             IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
             IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
 	}
-	
+	*/
 	stages {
 		stage("Cleanup Workspace"){
 			steps {
@@ -20,7 +20,7 @@ environment {
 		    }
 		}
 	
-		stage("Checkout"){
+	/*	stage("Checkout"){
 			steps {
 			git branch: 'main', credentialsId: 'github', url: 'https://github.com/Mark72888/register-app.git'
 		    }
@@ -78,6 +78,6 @@ environment {
 	            sh ('docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image ashfaque9x/register-app-pipeline:latest --no-progress --scanners vuln  --exit-code 0 --severity HIGH,CRITICAL --format table')
                }
            }
-       }
+       }*/
     }
 }
