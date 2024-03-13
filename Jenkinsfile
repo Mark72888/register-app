@@ -20,13 +20,13 @@ pipeline {
 		    }
 		}
 	
-	/*	stage("Checkout"){
+		stage("Checkout"){
 			steps {
 			git branch: 'main', credentialsId: 'github', url: 'https://github.com/Mark72888/register-app.git'
 		    }
 		}
 		
-		stage("build"){
+	/*	stage("build"){
 			steps {
 				sh "mvn clean package"
 		    }
