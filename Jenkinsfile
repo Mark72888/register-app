@@ -26,14 +26,14 @@ pipeline {
 		    }
 		}
 		
-	/*	stage("build"){
+		stage("build"){
 			steps {
 				sh "mvn clean package"
 		    }
 			
 		}
 		
-		stage("Test"){
+	/*	stage("Test"){
 			steps {
 				sh "mvn test"
 		    }	
